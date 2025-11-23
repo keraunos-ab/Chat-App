@@ -1,0 +1,2 @@
+Main-Class: ChatClient.LoginPage
+Class-Path: ChatClient/lib/gson.jar ChatClient/lib/postgres.jar
