@@ -4,6 +4,8 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 
 public class LoginPage extends JFrame
 {
@@ -19,7 +21,7 @@ public class LoginPage extends JFrame
 
         String[] hosts = {
             "brxdesktopapp.duckdns.org",
-            "ip for lan set up",
+            "brxlaptopapp.duckdns.org",
             "localhost"
         };
         int port = 51102;
@@ -104,10 +106,12 @@ public class LoginPage extends JFrame
         loginButton.addActionListener(e ->
         {
             String userNameText = userName.getText();
+            Argon2 argon2 = Argon2Factory.create();
+            String hashedPass = argon2.hash(2, 65536, 1, password.getPassword());
             String pass = new String(password.getPassword());
             try
             {
-                if (client.LogIn(userNameText, pass))
+                if (client.LogIn(userNameText, hashedPass) || client.LogIn(userNameText, pass))
                 {
                     JOptionPane.showMessageDialog(this, "Login Successful!");
                     new ChatMenu(client).setVisible(true);

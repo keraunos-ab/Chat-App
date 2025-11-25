@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.function.Predicate;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 
 public class SignupPage extends JFrame
 {
@@ -187,7 +189,7 @@ public class SignupPage extends JFrame
         confirmBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         confirmBtn.addActionListener(e ->
-            {
+        {
             if (!firstName.isValidInput()) return;
             if (!lastName.isValidInput()) return;
             if (!username.isValidInput()) return;
@@ -211,12 +213,14 @@ public class SignupPage extends JFrame
 
             try 
             {
+                Argon2 argon2 = Argon2Factory.create();
+                String hashedPass = argon2.hash(2, 65536, 1, pass.toCharArray());
                 Client client = new Client("localhost", 51102);
                 boolean ok = client.SignUp(
                         firstName.getValue(),
                         lastName.getValue(),
                         username.getValue(),
-                        pass
+                        hashedPass
                 );
                 System.out.println("Signup attempt for: " + username.getValue() + " was" + (ok ? " successful." : " unsuccessful."));
                 if (ok)
