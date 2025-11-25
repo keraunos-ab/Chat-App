@@ -29,7 +29,7 @@ Note: while serializing i discovered the type localdatetime (the type used for t
 UI :
 The ui has 3 pages : Loginpage, SignupPage, ChatMenu
 loginapage : after a successful login it creates an instant of the Client and directs the user to ChatMenu
-SignupPage : checks if inputed info are correct and creates a new user in the db then directs the user to LoginPage(conditions built in to the UI itself)
+SignupPage : checks if inputed info are correct and creates a new user in the db then directs the user to LoginPage(conditions built in to the UI itself), this is also where the hashing is done to the password
 ChatMenu : takes a client instant as an argument and uses it to communicate with the db using its exposed methods
 
 
