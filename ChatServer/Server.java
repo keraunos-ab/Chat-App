@@ -29,7 +29,8 @@ public class Server
                 clients.add(clientHandler);
                 new Thread(clientHandler).start();
             }
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
